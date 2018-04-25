@@ -24,7 +24,7 @@
 	<button type="button" class="btn btn-link">Link</button>	
 	
 	
-	<script src="/webjars/jquery/3.3.1/dis/jquery.min.js"></script>
+	<script src="/webjars/jquery/3.3.1/dist/jquery.min.js"></script>
 	<script src="/webjars/bootstrap/4.1.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
