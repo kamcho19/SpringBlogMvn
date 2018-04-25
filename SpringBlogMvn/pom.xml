@@ -61,7 +61,7 @@
 		</dependency>
 		<!--  JSP  -->
 		
-		<!--  velocity no working -->
+		<!--  velocity -not working -->
 <!-- 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-velocity</artifactId>
