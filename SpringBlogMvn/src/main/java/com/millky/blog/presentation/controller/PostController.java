@@ -3,6 +3,8 @@ package com.millky.blog.presentation.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +29,10 @@ public class PostController {
 	}
 	
 	@RequestMapping(value = "/write", method= RequestMethod.POST)
-	public String write(Post post) {
+	public String write(@Valid Post post, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "form";
+		}
 		post.setRegDate(new Date());
 		return "redirect:/post/"+ postDao.save(post).getId();
 	}
@@ -36,7 +41,7 @@ public class PostController {
 	public String list(Model model) {
 		List<Post> postList = postDao.findAll();
 		model.addAttribute("postList", postList);
-		return "blog";
+		return "list";
 	}
 	
 	@RequestMapping("/{id}")
