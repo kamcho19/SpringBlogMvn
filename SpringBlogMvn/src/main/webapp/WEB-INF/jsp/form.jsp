@@ -74,8 +74,12 @@
 	  <i class="pen-icon icon-underline" data-action="underline"></i>
 	  <i class="pen-icon icon-createlink" data-action="createlink"></i>
 	</div>
+	
+	<c:if test="${post.id == 0 }"><c:url var ="actionUrl" value="/post/write" /></c:if>
+	<c:if test="${post.id != 0 }"><c:url var ="actionUrl" value="/post/${post.id }/edit" /></c:if>
 
-	<form:form action="/post/write" modelAttribute="post" onsubmit="if($('#pen').html()!='<p><br></p>')$('#content').val($('#pen').html()); pen.destroy();" method="post">
+	<form:form action="${actionUrl}" modelAttribute="post" onsubmit="if($('#pen').html()!='<p><br></p>')$('#content').val($('#pen').html()); pen.destroy();" method="post">
+		<c:if test="${post.id != 0 }"><form:input type="hidden" path="regDate" /></c:if>
 
 		<form:errors path="*" cssClass="errorblock" element="div" />
 
@@ -93,7 +97,7 @@
 		<hr style="margin-top: 2px; border-top: 1px solid #999;">
 
 		<div data-toggle="pen" data-placeholder="Content" id="pen" style="min-height: 200px;"></div>
-		<form:input type="hidden" path="content" id="content" />
+		<form:input type="text" path="content" id="content" />
 		<form:errors path="content" cssClass="error" />
 
 		<hr>
@@ -114,6 +118,7 @@
 			toolbar : document.getElementById('custom-toolbar'),
 			editor : document.querySelector('[data-toggle="pen"]')
 		};
+		$('#pen').html($('#content').val());
 		// create editor
 		var pen = window.pen = new Pen(options);
 		pen.focus();

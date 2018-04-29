@@ -1,6 +1,6 @@
 package com.millky.blog.presentation.controller;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -33,10 +33,10 @@ public class PostController {
 		if(bindingResult.hasErrors()) {
 			return "form";
 		}
-		post.setRegDate(new Date());
+		post.setRegDate(LocalDateTime.now());
 		return "redirect:/post/"+ postDao.save(post).getId();
 	}
-	
+	 
 	@RequestMapping("/list")
 	public String list(Model model) {
 		List<Post> postList = postDao.findAll();
@@ -50,5 +50,28 @@ public class PostController {
 		model.addAttribute("post", post);
 		return "post";
 	}
+	
+	@RequestMapping("/{id}/delete")
+	public String delete(@PathVariable int id) {
+		postDao.deleteById(id);
+		return "redirect:/post/list";
+	}
+	
+	@RequestMapping(value = "/{id}/edit", method =RequestMethod.GET)
+	public String editor(Model model, @PathVariable int id) {
+		Post post = postDao.getOne(id);
+		model.addAttribute("post", post);
+		return "form";
+	}
+	
+	@RequestMapping(value = "/{id}/edit", method=RequestMethod.POST)
+	public String edit(@Valid Post post, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "form";
+		}
+		return "redirect:/post/"+postDao.save(post).getId();
+	}
+	
+	
 
 }
